@@ -1,0 +1,4 @@
+[install]
+saveTextLockfile = true
+# Delay newly published packages by 24 hours as a basic supply-chain safeguard.
+minimumReleaseAge = 86400
