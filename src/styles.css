@@ -1,0 +1,137 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-glass: var(--glass);
+  --color-mood-vibrant: var(--mood-vibrant);
+  --color-mood-calm: var(--mood-calm);
+  --color-mood-melancholy: var(--mood-melancholy);
+  --color-mood-energetic: var(--mood-energetic);
+  --color-mood-reflective: var(--mood-reflective);
+  --font-pixel: "Silkscreen", monospace;
+  --font-sans: "Sora", system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.25rem;
+  --background: oklch(0.18 0.04 275);
+  --foreground: oklch(0.96 0.02 300);
+  --card: oklch(0.22 0.05 278);
+  --card-foreground: oklch(0.96 0.02 300);
+  --popover: oklch(0.22 0.05 278);
+  --popover-foreground: oklch(0.96 0.02 300);
+  --primary: oklch(0.86 0.13 85);
+  --primary-foreground: oklch(0.2 0.04 275);
+  --secondary: oklch(0.3 0.05 278);
+  --secondary-foreground: oklch(0.96 0.02 300);
+  --muted: oklch(0.28 0.04 278);
+  --muted-foreground: oklch(0.72 0.04 285);
+  --accent: oklch(0.8 0.12 350);
+  --accent-foreground: oklch(0.2 0.04 275);
+  --destructive: oklch(0.68 0.19 22);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(1 0 0 / 14%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.86 0.13 85);
+  --glass: oklch(0.2 0.05 278 / 62%);
+  --mood-vibrant: oklch(0.79 0.14 360);
+  --mood-calm: oklch(0.84 0.09 210);
+  --mood-melancholy: oklch(0.72 0.14 275);
+  --mood-energetic: oklch(0.88 0.13 85);
+  --mood-reflective: oklch(0.9 0.12 140);
+  --shadow-pixel: 4px 4px 0 0 oklch(0 0 0 / 45%);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html, body { height: 100%; overflow: hidden; }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+}
+
+@utility glass {
+  background: var(--glass);
+  backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-pixel);
+}
+
+@utility pixel-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-pixel);
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid var(--border);
+  background: var(--glass);
+  backdrop-filter: blur(12px);
+  color: var(--foreground);
+  box-shadow: var(--shadow-pixel);
+  transition: transform 0.12s, box-shadow 0.12s, background 0.12s;
+  &:hover { background: var(--secondary); }
+  &:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 0 oklch(0 0 0 / 45%); }
+  &:disabled { opacity: 0.4; pointer-events: none; }
+}
+
+@utility pixel-btn-primary {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border-color: transparent;
+  &:hover { background: var(--primary); filter: brightness(1.08); }
+}
+
+@utility pixel-input {
+  width: 100%;
+  background: oklch(0 0 0 / 25%);
+  border: 1px solid var(--input);
+  padding: 0.55rem 0.7rem;
+  font-size: 0.875rem;
+  color: var(--foreground);
+  outline: none;
+  &:focus { border-color: var(--ring); }
+}
+
+@utility pixel-tag {
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  white-space: nowrap;
+  padding: 4px 8px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  box-shadow: var(--shadow-pixel);
+  pointer-events: none;
+}
+
+input[type="range"] { accent-color: var(--primary); }
+input[type="date"]::-webkit-calendar-picker-indicator { filter: invert(1); }
