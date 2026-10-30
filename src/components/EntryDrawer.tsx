@@ -54,7 +54,7 @@ export function EntryDrawer({ open, editing, onClose, onSave }: Props) {
             </Field>
             <Field label={`Mood · ${m.mood}`}>
               <input type="range" min={0} max={MOODS.length - 1} value={moodIdx} className="w-full"
-                onChange={(e) => set("mood", MOODS[Number(e.target.value)])} />
+                onChange={(e) => { const v = MOODS[Number(e.target.value)]; if (v) set("mood", v); }} />
               <div className="mt-1 flex justify-between">
                 {MOODS.map((md) => (
                   <span key={md} title={md} className="h-3 w-3" style={{ background: MOOD_COLORS[md], outline: md === m.mood ? "2px solid currentColor" : "none" }} />

@@ -49,7 +49,7 @@ export function LifeApp() {
     catch { alert("That file doesn't look like a Life in Pixels backup."); }
   };
 
-  const years = milestones.length ? `${milestones[0].date.slice(0, 4)}–${milestones[milestones.length - 1].date.slice(0, 4)}` : "";
+  const years = milestones.length ? `${milestones[0]?.date.slice(0, 4)}–${milestones[milestones.length - 1]?.date.slice(0, 4)}` : "";
 
   return (
     <div ref={wrapRef} className="fixed inset-0">
