@@ -199,10 +199,13 @@ function Links({ points, list, count }: { points: THREE.Vector3[]; list: Milesto
     const colors: number[] = [];
     const c = new THREE.Color();
     for (let i = 1; i < Math.min(count, points.length); i++) {
-      const a = points[i - 1], b = points[i];
-      const a = points[i - 1]!, b = points[i]!;
-      c.set(MOOD_COLORS[list[i - 1].mood]); colors.push(c.r, c.g, c.b);
-      c.set(MOOD_COLORS[list[i].mood]); colors.push(c.r, c.g, c.b);
+      const a = points[i - 1]!;
+      const b = points[i]!;
+      const mA = list[i - 1];
+      const mB = list[i];
+      pos.push(a.x, a.y, a.z, b.x, b.y, b.z);
+      c.set(MOOD_COLORS[mA?.mood ?? "Calm"]); colors.push(c.r, c.g, c.b);
+      c.set(MOOD_COLORS[mB?.mood ?? "Calm"]); colors.push(c.r, c.g, c.b);
     }
     const g = new THREE.BufferGeometry();
     g.setAttribute("position", new THREE.Float32BufferAttribute(pos, 3));
@@ -235,7 +238,8 @@ export function World({ milestones, visibleCount, mode, selectedId, onSelect }: 
   const skyPts = useMemo(() => layoutSky(milestones), [milestones]);
   const pts = mode === "island" ? islandPts : skyPts;
   const selIdx = milestones.findIndex((m) => m.id === selectedId);
-  const focus = selIdx >= 0 ? pts[selIdx].clone().add(new THREE.Vector3(0, 0.8, 0)) : null;
+  const selPt = selIdx >= 0 ? pts[selIdx] : undefined;
+  const focus = selPt ? selPt.clone().add(new THREE.Vector3(0, 0.8, 0)) : null;
 
   return (
     <>
@@ -255,7 +259,7 @@ export function World({ milestones, visibleCount, mode, selectedId, onSelect }: 
           <>
             <Terrain />
             {milestones.map((m, i) => (
-              <Grow key={m.id} position={islandPts[i]} visible={i < visibleCount}
+              <Grow key={m.id} position={islandPts[i] ?? new THREE.Vector3()} visible={i < visibleCount}
                 selected={m.id === selectedId} onClick={() => onSelect(m.id)} label={m.title}>
                 <Structure m={m} />
               </Grow>
@@ -266,7 +270,7 @@ export function World({ milestones, visibleCount, mode, selectedId, onSelect }: 
           <>
             <Links points={skyPts} list={milestones} count={visibleCount} />
             {milestones.map((m, i) => (
-              <Grow key={m.id} position={skyPts[i]} visible={i < visibleCount}
+              <Grow key={m.id} position={skyPts[i] ?? new THREE.Vector3()} visible={i < visibleCount}
                 selected={m.id === selectedId} onClick={() => onSelect(m.id)} label={m.title}>
                 <Star m={m} />
               </Grow>
